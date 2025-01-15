@@ -12,11 +12,11 @@ pipeline {
         // REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
     }
     stages {
-        // stage('Cleaning Workspace') {
-        //     steps {
-        //         cleanWs()
-        //     }
-        // }
+        stage('Cleaning Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
         // stage('Checkout from Git') {
         //     steps {
         //         git branch: 'main', credentialsId: 'GITHUB', url: 'https://github.com/codewithmuh/three-tier-devsecops-project.git'
