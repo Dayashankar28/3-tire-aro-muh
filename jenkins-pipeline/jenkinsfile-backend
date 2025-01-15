@@ -13,7 +13,7 @@ pipeline {
         // REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
         dockerImage='daya28/backend'
         dockerImageTag='latest'
-        dockerfilePath='./Dokerfile'
+        dockerfilePath='./Dockerfile'
     }
     stages {
         stage('Cleaning Workspace') {
