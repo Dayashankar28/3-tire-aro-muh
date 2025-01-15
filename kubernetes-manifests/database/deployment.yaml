@@ -1,3 +1,44 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata: 
+#   namespace: three-tier
+#   name: postgres
+# spec: 
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: postgres
+#   template:
+#     metadata:
+#       labels: 
+#         app: postgres
+#     spec: 
+#       containers:
+#       - name: postgres
+#         image: postgres:latest
+#         ports:
+#         - containerPort: 5432
+#         env: 
+#           - name: POSTGRES_USER
+#             valueFrom:
+#               secretKeyRef:
+#                 name: postgres-sec
+#                 key: username
+#           - name: POSTGRES_PASSWORD
+#             valueFrom:
+#               secretKeyRef:
+#                 name: postgres-sec
+#                 key: password
+#           - name: POSTGRES_DB
+#             value: mydatabase
+#         volumeMounts:
+#           - name: postgres-volume
+#             mountPath: /var/lib/postgresql/data
+#       volumes: 
+#       - name: postgres-volume
+#         persistentVolumeClaim:
+#           claimName: postgres-volume-claim
+
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -38,3 +79,59 @@ spec:
       - name: postgres-volume
         persistentVolumeClaim:
           claimName: postgres-volume-claim
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv
+  namespace: three-tier
+spec:
+  capacity: 
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/postgres # Ensure this path exists on the host machine
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-volume-claim
+  namespace: three-tier
+spec: 
+  accessModes:  
+    - ReadWriteOnce
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: Secret
+metadata: 
+  namespace: three-tier
+  name: postgres-sec
+type: Opaque
+data:  
+  password: c2RmdnNuZnNmc3NzMjQz # base64-encoded password
+  username: YWRtaW4= # base64-encoded username
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: three-tier
+  name: postgres-svc
+spec:
+  selector:
+    app: postgres
+  ports:
+  - name: postgres
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
+  type: LoadBalancer
