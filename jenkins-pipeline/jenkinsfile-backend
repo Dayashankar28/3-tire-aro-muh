@@ -62,15 +62,15 @@ pipeline {
         //         }
         //     }
         // }
-        // stage("Docker Image Build") {
-        //     steps {
-        //         script {
-        //             dir('app-code/backend') {
-        //                    gitdockerbuild(dockerImage, dockerImageTag,dockerfilePath,'docker-cred')
-        //             }
-        //         }
-        //     }
-        // }
+        stage("Docker Image Build") {
+            steps {
+                script {
+                    dir('app-code/backend') {
+                           gitdockerbuild(dockerImage, dockerImageTag,dockerfilePath,'docker-cred')
+                    }
+                }
+            }
+        }
         // stage("ECR Image Pushing") {
         //     steps {
         //         script {
