@@ -11,9 +11,9 @@ pipeline {
         // AWS_ECR_REPO_NAME = credentials('ECR_REPO_FRONTEND')
         // AWS_DEFAULT_REGION = 'us-west-2'
         // REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
-        dockerImage='daya28/frontend'
-        dockerImageTag='latest'
-        dockerfilePath='./Dockerfile'
+        DOCKER_IMAGE_NAME='daya28/frontend'
+        DOCKER_IMAGE_TAG='latest'
+        DOCKERFILE_PATH='./Dockerfile'
     }
     stages {
         // stage('Cleaning Workspace') {
