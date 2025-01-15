@@ -12,11 +12,11 @@ pipeline {
         // REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
     }
     stages {
-        stage('Cleaning Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
+        // stage('Cleaning Workspace') {
+        //     steps {
+        //         cleanWs()
+        //     }
+        // }
         // stage('Checkout from Git') {
         //     steps {
         //         git branch: 'main', credentialsId: 'GITHUB', url: 'https://github.com/codewithmuh/three-tier-devsecops-project.git'
@@ -29,7 +29,7 @@ pipeline {
                         sh ''' 
                             $SCANNER_HOME/bin/sonar-scanner \
                             -Dsonar.projectKey=backend \
-                            -Dsonar.sources=./app-code/ \
+                            -Dsonar.sources=. \
                             -Dsonar.login=sqp_eb636d3a2fe72318bccc91e072576a39e659c94f
                         '''
                     }
