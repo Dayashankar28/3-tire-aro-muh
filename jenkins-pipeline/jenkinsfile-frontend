@@ -1,3 +1,4 @@
+@Library('myfirstlib') _
 pipeline {
     agent {label 'slave1'}
     tools {
