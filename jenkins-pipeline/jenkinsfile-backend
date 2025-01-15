@@ -10,6 +10,9 @@ pipeline {
         // AWS_ECR_REPO_NAME = credentials('ECR_REPO_BACKEND')
         // AWS_DEFAULT_REGION = 'us-west-2'
         // REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
+        dockerImage='daya28/backend'
+        dockerImageTag='latest'
+        dockerfilePath='./Dokerfile'
     }
     stages {
         stage('Cleaning Workspace') {
@@ -58,17 +61,15 @@ pipeline {
         //         }
         //     }
         // }
-        // stage("Docker Image Build") {
-        //     steps {
-        //         script {
-        //             dir('app-code/backend') {
-        //                     sh 'docker system prune -f'
-        //                     sh 'docker container prune -f'
-        //                     sh 'docker build -t ${AWS_ECR_REPO_NAME} .'
-        //             }
-        //         }
-        //     }
-        // }
+        stage("Docker Image Build") {
+            steps {
+                script {
+                    dir('app-code/backend') {
+                           gitdockerbuild(dockerImage, dockerImageTag,dockerfilePath,'docker-cred')
+                    }
+                }
+            }
+        }
         // stage("ECR Image Pushing") {
         //     steps {
         //         script {
