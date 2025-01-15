@@ -31,7 +31,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: 35.154.221.90
+    - host: frontend.local
       http:
         paths:
           - path: /
