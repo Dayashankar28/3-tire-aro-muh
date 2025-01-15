@@ -1,5 +1,6 @@
+@Library('myfirstlib') _
 pipeline {
-    agent any 
+    agent {label 'slave1'} 
     tools {
         jdk 'jdk17'
         nodejs 'nodejs21'
